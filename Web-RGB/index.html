@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--Adapt to mobile phone size, not allowed to zoom-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>web rgb</title>
+    <script src="jquery.js"></script>
+    <style type="text/css">
+		body,div,img{ border:0; margin:0; padding:0;}
+    </style>
+</head>
+
+<body>
+	<div style="width:100%; height:40px; line-height:40px; text-align:center; font-size:20px; color:white; background-color:blue; margin:auto">
+    	Controlling RGB LED with the web
+    </div>
+    <img width="300" height="300" src="color_range.png" id="myimg" style="display:none" alt="range"/>
+   
+    <div style="width:300px; height:300px; position:relative; text-align:center; margin:auto; margin-top:20px; margin-bottom:40px;" id="colorRange">
+    
+        <canvas id="mycanvas" width="300" height="300">
+            Your browser does not support the html5 Canvas element
+        </canvas>
+        
+        <img width="30" height="30" src="color_picker.png" id="picker" style="position:absolute; top:135px; left:135px;" alt="picker" /> 
+    </div>
+	
+	<div style="font-size:20px;align:center;text-align:center;margin:auto; border:1px solid gray; border-radius:10px; width:320px; height:40px; line-height:40px;">
+		<div>
+			<input type="radio" name="radio1" value="static" checked/>static&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="radio1" value="breath"/>breath&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="radio1" value="flash"/>flash
+		</div> 
+	</div>   
+</body>
+	<script>
+		var RadiusRange = 150;
+		var RadiusPicker = 15;
+		var offsetX = window.screen.width / 2 - RadiusRange;
+		var offsetY = 60;
+		var centerX = offsetX + RadiusRange;
+		var centerY = offsetY + RadiusRange;
+		
+		var colorRange = $('#colorRange')[0];
+		var colorPicker = $('#picker')[0];
+        var myCanvas = $('#mycanvas')[0];
+        var myImg = $('#myimg')[0];
+        var ctx = myCanvas.getContext('2d');
+        myImg.onload = function(){ctx.drawImage(myImg, 0, 0);}
+        
+        colorRange.addEventListener('touchstart', touch, false);	//监听touchstart事件
+        colorRange.addEventListener('touchmove', touch, false);		//监听touchmove事件
+        function touch(e)
+        {
+         	var X = e.touches[0].clientX;
+			var Y = e.touches[0].clientY;
+			var x = X - centerX;
+			var y = Y - centerY;
+            if(Math.sqrt(x*x + y*y) < RadiusRange-5)
+			{
+				colorPicker.style.left = X - offsetX - RadiusPicker +'px';
+				colorPicker.style.top = Y - offsetY - RadiusPicker +'px';
+				
+				var rgba = ctx.getImageData(X-offsetX, Y-offsetY, 1, 1).data;
+				var red = rgba['0'];
+				var green = rgba['1'];
+				var blue = rgba['2'];
+				$.post('/rgb', {red: red, green: green, blue: blue});
+			}  
+			
+			//阻止事件上抛给浏览器
+			event.preventDefault(); 
+        }	
+		
+		//rgb灯光显示类型选择
+		$('input').click(function() {
+			var type = this.value;
+			$.post('/lightType', {type: type});;
+		});
+    </script>
+</html>
