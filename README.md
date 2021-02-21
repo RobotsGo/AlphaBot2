@@ -48,5 +48,5 @@ $ sudo make install
 Clone RobotsGo AlphaBot2 repo
 ```
 cd /home/pi
-git clone https://github.com/jacksonliam/mjpg-streamer.git
+git clone https://github.com/RobotsGo/AlphaBot2.git
 ```
