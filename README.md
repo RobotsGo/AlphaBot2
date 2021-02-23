@@ -31,13 +31,13 @@ $ sudo pip install RPi.GPIO
 $ sudo pip install spidev
 $ sudo reboot
 ```
-Clone rpi_ws281x, build and install.
+Clone: rpi_ws281x, build and install.
 ```
 $ cd /home/pi
 $ git clone https://github.com/jgarff/rpi_ws281x.git
 $ sudo /home/pi/rpi_ws281x/scons
 ```
-Clone mjpg-streamer, build and install.
+Clone: mjpg-streamer, build and install.
 ```
 $ cd /home/pi
 $ git clone https://github.com/jacksonliam/mjpg-streamer.git
@@ -45,20 +45,20 @@ $ cd /home/pi/mjpg-streamer/mjpg-streamer-experimental
 $ make
 $ sudo make install
 ```
-Clone PiBorg GamePad Libary
+Clone: PiBorg GamePad Libary
 ```
 $ cd /home/pi
 $ git clone https://github.com/piborg/Gamepad.git
 ```
-Clone RobotsGo AlphaBot2 repo
+Clone: RobotsGo AlphaBot2 repo
 ```
 cd /home/pi
 git clone https://github.com/RobotsGo/AlphaBot2.git
 ```
-Start Service mjpg-streamer
+Start Service: mjpg-streamer
 ```
 $cd /home/pi
-$ sudo cp /home/pi/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
+$ sudo cp /home/pi/AlphaBot2/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
 $ sudo chmod 644 mjpgstreamer.service
 $ sudo systemctl daemon-reload
 $ sudo systemctl enable mjpgstreamer.service
