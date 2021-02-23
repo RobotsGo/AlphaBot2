@@ -45,8 +45,22 @@ $ cd /home/pi/mjpg-streamer/mjpg-streamer-experimental
 $ make
 $ sudo make install
 ```
+Clone PiBorg GamePad Libary
+```
+$ cd /home/pi
+$ git clone https://github.com/piborg/Gamepad.git
+```
 Clone RobotsGo AlphaBot2 repo
 ```
 cd /home/pi
 git clone https://github.com/RobotsGo/AlphaBot2.git
+```
+Start Service mjpg-streamer
+```
+$cd /home/pi
+$ sudo cd cp /home/pi/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
+$ sudo chmod 644 mjpgstreamer.service
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable mjpgstreamer.service
+$ sudo systemctl start mjpgstreamer.service
 ```
