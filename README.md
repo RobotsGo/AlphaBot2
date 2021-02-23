@@ -58,7 +58,7 @@ git clone https://github.com/RobotsGo/AlphaBot2.git
 Start Service mjpg-streamer
 ```
 $cd /home/pi
-$ sudo cd cp /home/pi/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
+$ sudo cp /home/pi/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
 $ sudo chmod 644 mjpgstreamer.service
 $ sudo systemctl daemon-reload
 $ sudo systemctl enable mjpgstreamer.service
