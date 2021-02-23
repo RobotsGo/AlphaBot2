@@ -52,12 +52,12 @@ $ git clone https://github.com/piborg/Gamepad.git
 ```
 Clone: RobotsGo AlphaBot2 repo
 ```
-cd /home/pi
-git clone https://github.com/RobotsGo/AlphaBot2.git
+$ cd /home/pi
+$ git clone https://github.com/RobotsGo/AlphaBot2.git
 ```
 Start Service: mjpg-streamer
 ```
-$cd /home/pi
+$ cd /home/pi
 $ sudo cp /home/pi/AlphaBot2/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
 $ sudo chmod 644 mjpgstreamer.service
 $ sudo systemctl daemon-reload
