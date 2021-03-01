@@ -16,7 +16,8 @@ Joy-Left: Camera Left, Right, Up, Down
 A: Play burp-sound-effect.mp3  
 B: Play Cow-moo-sound.mp3  
 X: Play Dj-air-horn-sound-effect.mp3  
-Y: Play Duck-quack.mp3
+Y: Play Duck-quack.mp3  
+XBOX: Quit    
 
 Required to play audio mpg123
 ```
