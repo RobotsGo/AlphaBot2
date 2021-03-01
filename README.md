@@ -45,10 +45,10 @@ $ cd /home/pi/mjpg-streamer/mjpg-streamer-experimental
 $ make
 $ sudo make install
 ```
-Clone: PiBorg GamePad Libary
+Clone: PiBorg GamePad Library
 ```
 $ cd /home/pi
-$ git clone https://github.com/piborg/Gamepad.git
+$ git https://github.com/RobotsGo/Gamepad.git
 ```
 Clone: RobotsGo AlphaBot2 repo
 ```
