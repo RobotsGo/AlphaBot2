@@ -9,7 +9,7 @@ AlphaBot2 wiki https://www.waveshare.com/wiki/AlphaBot2-Pi
 Also original development for the AlphaBot2 platform by members of RobotGo.
 
 ## Getting started
-Once you AlphaBot2 is all setup with Raspberry Pi OS.
+Once your AlphaBot2 is all setup with Raspberry Pi OS.
 
 Update your pi to the latest Raspberry Pi OS.
 ```
