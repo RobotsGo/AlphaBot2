@@ -5,7 +5,8 @@ Drive, Camera, LED lights control via Gamepad
 
 ## Getting started
 Supported game pads   
-XboxOne Wireless via blutooth https://pimylifeup.com/xbox-controllers-raspberry-pi/   
+XboxOne Wireless via blutooth https://pimylifeup.com/xbox-controllers-raspberry-pi/  
+Steam Controller via dongle  
 
 D-Pad Up/Down: High Speed, Medium Speed, Low Speed    
 D-Pad Left/Right: Change LED Colours off, Red, Green, Blue, White    
@@ -18,6 +19,19 @@ B: Play Cow-moo-sound.mp3
 X: Play Dj-air-horn-sound-effect.mp3  
 Y: Play Duck-quack.mp3  
 XBOX: Quit    
+
+## Usage
+Script must run as root or LED lights will not work.     
+```
+$ sudo python main.py -g XboxOne 
+
+Args
+-h, --help, Display Help
+-c, --camera, Disable mpeg streamer
+-g, --gamepad, GamePad you would like to use to control the robot. Options are XboxOne or Steam
+-v, --version, See version and build information
+```
+Onboard Audio and LED's cannot work at the same time as they use the same PWM. See Limitations: https://github.com/jgarff/rpi_ws281x 
 
 Required to play audio mpg123
 ```
@@ -34,13 +48,7 @@ Force audio out of Headphone jack.
 $ sudo echo "hdmi_ignore_edid_audio=1" > /boot/config.txt
 $ sudo echo "audio_pwm_mode=2" > /boot/config.txt
 $ sudo reboot
-```
-Script must run as root as sound will not work or the LED lights.
-
+``` 
 ## Issues
-* Sound system (pulse Audio) can only play audio first run of the script, any runs of the script after, sound is distorted a reboot is required to restore sound.   
-* Pulseaudio or alsa not releasing @ script exit.  
-* pi user is part of audio group and playing audio as user works but not with-in the script.
-* Trying to init devices on batteries will make the pi reboot as too much drain at once (added some time.sleep(5) during init process).
-* Add more support for gamepads, with a simple args to select at script start.
+* Add support for more gamepads
 
