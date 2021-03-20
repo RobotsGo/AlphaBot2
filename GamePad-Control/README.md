@@ -1,13 +1,13 @@
 # AlphaBot2 - RobotsGo 
 # GamePad-Control
 
-Drive, Camera, LED lights control via Gamepad
+Drive, Camera, LED light Functions via Gamepad
 
 ## Getting started
 Supported game pads   
 XboxOne Wireless Controller via bluetooth https://pimylifeup.com/xbox-controllers-raspberry-pi/  
-Steam Controller via dongle or bluetooth
-PS3 Controller via bluetooth https://pimylifeup.com/raspberry-pi-playstation-controllers/
+Steam Controller via dongle or bluetooth  
+PS3 Controller via bluetooth https://pimylifeup.com/raspberry-pi-playstation-controllers/  
 
 D-Pad Up/Down: High Speed, Medium Speed, Low Speed    
 D-Pad Left/Right: Change LED Colours off, Red, Green, Blue, White    
