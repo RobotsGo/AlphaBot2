@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 #coding: utf-8
- 
+
+#!/usr/bin/env python
+#coding: utf-8
+
 import sys, os
 sys.path.insert(0, "/home/pi/Gamepad")
 sys.path.insert(1, "/home/pi/AlphaBot2/python")
