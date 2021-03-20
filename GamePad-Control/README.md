@@ -5,8 +5,9 @@ Drive, Camera, LED lights control via Gamepad
 
 ## Getting started
 Supported game pads   
-XboxOne Wireless via blutooth https://pimylifeup.com/xbox-controllers-raspberry-pi/  
-Steam Controller via dongle  
+XboxOne Wireless Controller via bluetooth https://pimylifeup.com/xbox-controllers-raspberry-pi/  
+Steam Controller via dongle or bluetooth
+PS3 Controller via bluetooth https://pimylifeup.com/raspberry-pi-playstation-controllers/
 
 D-Pad Up/Down: High Speed, Medium Speed, Low Speed    
 D-Pad Left/Right: Change LED Colours off, Red, Green, Blue, White    
