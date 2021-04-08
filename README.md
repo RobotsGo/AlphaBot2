@@ -24,6 +24,7 @@ $pip3 install opencv-python
 $pip3 install flask
 $pip3 install rpi_ws281x
 $pip3 install adafruit-circuitpython-servokit
+$pip3 install psutil
 
 ```
 Clone: PiBorg GamePad Library
