@@ -25,7 +25,7 @@ import kick
 import motors as motor
 
 HOST_IP = ""
-HOST_PORT = 8000
+HOST_PORT = 5000
 RECEIVE_BUFF = ""
 SEND_BUFF = ""
 SPEED_MODE = 1 
