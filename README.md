@@ -49,11 +49,11 @@ $ ./start.sh
 From this script you can start:      
 FLASK/OpenCV streammer :Default port 8000    
 Network Controller client
-Network Controller Server :Default port 5000
-PS3 Controller Server
+Network Controller Server :Default port 5000    
+PS3 Controller Server         
 View version info and RobotsGo links
 
-Streamer and Network Controller Server will auto set the IP of the AlphaBot 
+Streamer and Network Controller Server will auto set the IP of the AlphaBot     
 When script exits the Streamer should stop
 
 ### Controller support
@@ -72,9 +72,9 @@ wasd = Camera Up,Down,Left,Right    q = Centre Camera
 1 2 3 = Speed Modes   ,. = Change led's colours   
 
 ### TO DO
-Add XboxOne controller support
-Move as much functions over to the gpiozero library
-Use the buzzer
-Use the IR sensors
-Share data between the controller application and the streamer application (colour speed mode) 
-Get images and videos os unit in action.
+Add XboxOne controller support   
+Move as much functions over to the gpiozero library   
+Use the buzzer   
+Use the IR sensors   
+Share data between the controller application and the streamer application (colour speed mode)    
+Get images and videos os unit in action       
