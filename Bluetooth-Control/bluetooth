@@ -1,2 +1,0 @@
-sleep 10s
-echo "discoverable on" | bluetoothctl
