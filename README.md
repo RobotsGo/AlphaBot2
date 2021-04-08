@@ -1,12 +1,13 @@
 # AlphaBot2 - RobotsGo 
 
-## Notes
-Repo containing original Waveshare AlphaBot2 demo code and updates/fixes as needed.   
-Link to original sources https://www.waveshare.com/w/upload/7/74/AlphaBot2.tar.gz
+## Info
+Repo containing all RobotsGo development code for the AlphaBot2 Platform  
 
-AlphaBot2 wiki https://www.waveshare.com/wiki/AlphaBot2-Pi
+### AlphaBot2-Control
+Take control of the AlphaBot via gamepad or over a TCP/IP connection with keyboard while   
+streaming the AB2 camera with openCV support.    
 
-Also original development for the AlphaBot2 platform by members of RobotGo.
+For python3 only!!!!!
 
 ## Getting started
 Once your AlphaBot2 is all setup with Raspberry Pi OS.
@@ -16,34 +17,14 @@ Update your pi to the latest Raspberry Pi OS.
 $ sudo apt update
 $ sudo apt full-upgrade
 ```
+Install needed dependencies. 
+```
+$sudo apt install python-gpiozero
+$pip3 install opencv-python 
+$pip3 install flask
+$pip3 install rpi_ws281x
+$pip3 install adafruit-circuitpython-servokit
 
-Install needed dependencies from the Raspberry Pi OS repos. 
-```
-$ sudo apt-get install ttf-wqy-zenhei
-$ sudo apt-get install python-pip
-$ sudo apt-get install cmake libjpeg8-dev
-$ sudo apt-get install gcc g++
-$ sudo apt-get install python-smbus
-$ sudo apt-get install python-serial
-$ sudo apt-get install build-essential python-dev scons swig -y
-$ sudo apt-get install python-bottle -y
-$ sudo pip install RPi.GPIO
-$ sudo pip install spidev
-$ sudo reboot
-```
-Clone: rpi_ws281x, build and install.
-```
-$ cd /home/pi
-$ git clone https://github.com/jgarff/rpi_ws281x.git
-$ sudo /home/pi/rpi_ws281x/scons
-```
-Clone: mjpg-streamer, build and install.
-```
-$ cd /home/pi
-$ git clone https://github.com/jacksonliam/mjpg-streamer.git
-$ cd /home/pi/mjpg-streamer/mjpg-streamer-experimental
-$ make
-$ sudo make install
 ```
 Clone: PiBorg GamePad Library
 ```
@@ -55,12 +36,45 @@ Clone: RobotsGo AlphaBot2 repo
 $ cd /home/pi
 $ git clone https://github.com/RobotsGo/AlphaBot2.git
 ```
-Start Service: mjpg-streamer
+### Running AlphaBot2-Control
+From the AlphaBot2-Control directory 
 ```
-$ cd /home/pi
-$ sudo cp /home/pi/AlphaBot2/Scripts/mjpgstreamer.service /lib/systemd/system/mjpgstreamer.service
-$ sudo chmod 644 mjpgstreamer.service
-$ sudo systemctl daemon-reload
-$ sudo systemctl enable mjpgstreamer.service
-$ sudo systemctl start mjpgstreamer.service
+$ chmod +x start.sh
+$ chmod +x startStreamer.sh
 ```
+Then start the Launch Script    
+```
+$ ./start.sh 
+```
+From this script you can start:      
+FLASK/OpenCV streammer :Default port 8000    
+Network Controller client
+Network Controller Server :Default port 5000
+PS3 Controller Server
+View version info and RobotsGo links
+
+Streamer and Network Controller Server will auto set the IP of the AlphaBot 
+When script exits the Streamer should stop
+
+### Controller support
+PS3 Controller
+
+https://pimylifeup.com/raspberry-pi-playstation-controllers/   
+R1 = Forwards   R2 = Backwards   
+RightStick = Steering Left, Right   LeftStick = Camera Up,Down,Left,Right   
+Cross = Kicker solenoid   Triangle = Center Camera   
+D UP/Down = Set Speed modes   D Left/Right = Change led's colours   
+
+Keyboard
+
+Arrow Keys = Forwards, Backwards, Left, Right   Space = Kicker solenoid   
+wasd = Camera Up,Down,Left,Right    q = Centre Camera   
+1 2 3 = Speed Modes   ,. = Change led's colours   
+
+### TO DO
+Add XboxOne controller support
+Move as much functions over to the gpiozero library
+Use the buzzer
+Use the IR sensors
+Share data between the controller application and the streamer application (colour speed mode) 
+Get images and videos os unit in action.
