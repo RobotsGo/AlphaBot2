@@ -1,11 +1,38 @@
 #!/usr/bin/env python
+#coding: utf-8
+
+
+# Written by spoonie (Rick Spooner) for RobotsGo 
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from flask import Flask, render_template, Response
 import io
 import cv2
 import psutil
+from imutils import resize
+import numpy as np
 
 app = Flask(__name__)
 vc = cv2.VideoCapture(0)
+vc.set(cv2.CAP_PROP_FPS,30)
+vc.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+vc.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+#To-Do get info from contorller program set below.
+speed = "FAST"
+led = "green"
 
 @app.route('/')
 def index():
@@ -17,44 +44,51 @@ def gen():
     """Video streaming generator function."""
     while True:
         
-        read_return_code, frame = vc.read()
+        ret, frame = vc.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA)
         
-        FONT = cv2.FONT_HERSHEY_PLAIN
+        font = cv2.FONT_HERSHEY_PLAIN
+        logo = cv2.imread("rgLogo.png")
+        logoResized = resize(logo, width=50, height=27)
+        logoWaterMark = cv2.cvtColor(logoResized, cv2.COLOR_BGR2BGRA)
       
             #Get CPU temp in C
             
         temp = psutil.sensors_temperatures()
         for name, entries in temp.items():
             for entry in entries:
-                CPU_TEMP = entry.current
+                cpuTemp = entry.current
 
     #Get total load CPU percentage
-        CPU_USAGE = psutil.cpu_percent(interval=None, percpu=False)
+        cpuUsage = psutil.cpu_percent(interval=None, percpu=False)
 
     #Get memory usage percentage 
-        MEM = psutil.virtual_memory()
-        MEM_USAGE = MEM.percent
+        mem = psutil.virtual_memory()
+        memUsage = mem.percent
 
-        CT = ("CPU Temp: " + str(round(CPU_TEMP, 1)) + "C")
-        CU = ("CPU Usage: " + str(round(CPU_USAGE, 1)) + "%")
-        MU = ("Memory Usage: " + str(round(MEM_USAGE,1 )) + "%")
-        #SC = ("Selected Colour: " + SELECTED_COLOUR)
-        
-        # if MODE == 1:
-            # SM = ("Selected Speed Mode: SLOW")
-        # elif MODE == 2:
-            # SM = ("Selected Speed Mode: MEDIUM")
-        # elif MODE == 3:
-            # SM = ("Selected Speed Mode: FAST")
-        # else:
-            # SM = ("Selected Speed Mode: SLOW")
+        ct = ("CPU Temp: " + str(cpuTemp) + "C")
+        cu = ("CPU Usage: " + str(cpuUsage) + "%")
+        mu = ("Memory Usage: " + str(memUsage) + "%")
+        sm = ("SpeedMode: " + speed)
+        lc = ("Led's: " + led)
     
-    #inserting text on video
-        cv2.putText(frame, CT, (15, 15), FONT, 1, (0, 255, 255), 1, cv2.LINE_4)
-        cv2.putText(frame, CU, (15, 30), FONT, 1, (0, 255, 255), 1, cv2.LINE_4)
-        cv2.putText(frame, MU, (15, 45), FONT, 1, (0, 255, 255), 1, cv2.LINE_4)
-        #cv2.putText(frame, SC, (15, 60), FONT, 1, (0, 255, 255), 1, cv2.LINE_4)
-        #cv2.putText(frame, SM, (15, 45), FONT, 1, (0, 255, 255), 1, cv2.LINE_4)
+    #Inserting text on video
+        cv2.putText(frame, ct, (15, 15), font, 1, (255, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame, cu, (15, 30), font, 1, (255, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame, mu, (15, 45), font, 1, (255, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame, sm, (15, 60), font, 1, (255, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame, lc, (15, 75), font, 1, (255, 255, 255), 1, cv2.LINE_4)
+    
+    #Build overlay for logo i = X, j = Y
+        frame_h, frame_w, frame_c = frame.shape
+        overlay = np.zeros((frame_h, frame_w, 4), dtype='uint8')
+        logoWaterMark_h, logoWaterMark_w, logoWaterMark_c = logoWaterMark.shape
+        for i in range(0, logoWaterMark_h):
+            for j in range(0, logoWaterMark_w):
+                if logoWaterMark[i, j][3] != 0:
+                    overlay[i + 420, j + 580] = logoWaterMark[i, j]
+                    
+        cv2.addWeighted(overlay, 1, frame, 1, 0, frame)
         
         encode_return_code, image_buffer = cv2.imencode('.jpg', frame)
         io_buf = io.BytesIO(image_buffer)
