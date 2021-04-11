@@ -66,17 +66,19 @@ R1 = Forwards   R2 = Backwards
 RightStick = Steering Left, Right   LeftStick = Camera Up,Down,Left,Right   
 Cross = Kicker solenoid   Triangle = Center Camera   
 D UP/Down = Set Speed modes   D Left/Right = Change led's colours   
+Square = Buzzer
 
 Keyboard
 
 Arrow Keys = Forwards, Backwards, Left, Right   Space = Kicker solenoid   
 wasd = Camera Up,Down,Left,Right    q = Centre Camera   
-1 2 3 = Speed Modes   ,. = Change led's colours   
+1 2 3 = Speed Modes   ,. = Change led's colours e = Buzzer
 
 ### TO DO
 Add XboxOne controller support   
 Move as much functions over to the gpiozero library   
-Use the buzzer   
+~~Use the buzzer~~            
+~~Logo overlay on video stream~~   
 Use the IR sensors   
 Share data between the controller application and the streamer application (colour speed mode)    
-Get images and videos os unit in action       
+Get images and videos of unit in action       
