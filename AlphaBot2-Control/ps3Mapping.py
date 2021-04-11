@@ -26,11 +26,18 @@ import servo
 import kick
 import motors as motor
 import socket
+import buzzer
  
 RUNNING = True
 SPEED_MODE = 1 
 SELECTED_COLOUR = 0  
 COLOURS =  ['off', 'Red', 'Green', 'Blue', 'White']
+
+def buzzerSoundOff():
+    buzzer.buzzOff()
+
+def buzzerSound():
+    buzzer.buzzOn()
 
 def centreServo():
     servo.centreServos()
@@ -118,6 +125,7 @@ def ps3MappingStart():
     CHANGE_COLOUR_DOWN = 'DPAD-LEFT'
     BUTTON_KICK = 'CROSS'
     BUTTON_CENTRE_SERVOS = 'TRIANGLE'
+    BUTTON_BUZZER = 'SQUARE'
     POLL_INTERVAL = 0.1
     
     try:   
@@ -150,6 +158,8 @@ def ps3MappingStart():
     gamepad.addButtonPressedHandler(BUTTON_KICK, kickButtonPressed)
     gamepad.addButtonPressedHandler(BUTTON_EXIT, exitButtonPressed)
     gamepad.addButtonPressedHandler(BUTTON_CENTRE_SERVOS, centreServo)
+    gamepad.addButtonPressedHandler(BUTTON_BUZZER, buzzerSound)
+    gamepad.addButtonReleasedHandler(BUTTON_BUZZER, buzzerSoundOff)
     
     # Joystick events handled in the background
     try:
