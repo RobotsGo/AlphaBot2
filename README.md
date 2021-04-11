@@ -25,7 +25,8 @@ $pip3 install flask
 $pip3 install rpi_ws281x
 $pip3 install adafruit-circuitpython-servokit
 $pip3 install psutil
-
+$pip3 install imutils
+$pip3 install numpy
 ```
 Clone: PiBorg GamePad Library
 ```
