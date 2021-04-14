@@ -68,11 +68,11 @@ Keyboard
 
 Arrow Keys = Forwards, Backwards, Left, Right   Space = Kicker solenoid   
 wasd = Camera Up,Down,Left,Right    q = Centre Camera   
-1 2 3 = Speed Modes   ,. = Change led's colours e = Buzzer
+1 2 3 = Speed Modes   ,. = Change led's colours  e = Buzzer
 
 ### TO DO
 ~~Add XboxOne controller support~~
-~~Request Add MMP1251 Mod My Pi gamepad support~~
+~~Request Add MMP1251 Mod My Pi gamepad support~~   
 Move as much functions over to the gpiozero library   
 ~~Use the buzzer~~            
 ~~Logo overlay on video stream~~   
