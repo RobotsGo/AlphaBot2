@@ -20,13 +20,14 @@ $ sudo apt full-upgrade
 Install needed dependencies. 
 ```
 $sudo apt install python-gpiozero
-$pip3 install opencv-python 
-$pip3 install flask
-$pip3 install rpi_ws281x
-$pip3 install adafruit-circuitpython-servokit
-$pip3 install psutil
-$pip3 install imutils
-$pip3 install numpy
+$sudo pip3 install opencv-python 
+$sudo pip3 install flask
+$sudo pip3 install rpi_ws281x
+$sudo pip3 install adafruit-circuitpython-servokit
+$sudo pip3 install psutil
+$sudo pip3 install imutils
+$sudo pip3 install numpy
+$sudo pip3 install pynput
 ```
 Clone: PiBorg GamePad Library
 ```
