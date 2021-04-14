@@ -25,6 +25,16 @@ menu_option_four() {
 }
 
 menu_option_five() {
+	echo "Start XboxOne Server"
+	sudo python3 xboxOneMapping.py
+}
+
+menu_option_six() {
+	echo "Start Mod my pi Server"
+	sudo python3 mmp1251Mapping.py
+}
+
+menu_option_seven() {
 	echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 	echo "@@@((((@@&((((((((((((((((%@@@@@@@@@@@@@"
 	echo "@@@(((//@@@/////////////////****@@@@@@@@"
@@ -41,14 +51,12 @@ menu_option_five() {
 	echo "@@@@@@@@########(((@@@////(((((@@@@@@@@@"
 	echo "@@@@@@@@###########(@@@///((((((#@@@@@@@"
 	echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-	echo "AlphaBot2-Control launcher Version 0.1"
-	echo "openCV/flask Streamer helper script Version 0.1"
-	echo "AlphaBot2-Control Network Client Version 0.1"
-	echo "AlphaBot2-Control Network Server Version 0.1"
-	echo "AlphaBot2-Control PS3 Control Version 0.1"
+	echo "AlphaBot2-Control Version 0.1"
 	echo ""
 	echo "https://robotsgo.net/ https://github.com/RobotsGo"
 	echo "Credits: Spoonieau (Rick Spooner)"
+	echo "Gamepad support by PiBorg Gamepad Library"
+	echo "https://github.com/piborg/Gamepad"
 }
 
 launcher_exit() {
@@ -74,10 +82,12 @@ until [ "$selection" = "0" ]; do
   echo "RobotsGo AlphaBot2-Control launcher ver 0.1"
   echo ""
   echo "    	1  -  Menu Option 1: Start openCV/flask Streamer"
-  echo "    	2  -  Menu Option 2: Start Network Client"
+  echo "    	2  -  Menu Option 2: Start Network Client Control"
   echo "    	3  -  Menu Option 3: Start Network Server"
-  echo "    	4  -  Menu Option 4: Start PS3 Control"
-  echo "    	5  -  Menu Option 4: View component info"
+  echo "    	4  -  Menu Option 4: Start PS3 gamepad Control"
+  echo "	5  -  Menu Option 5: Start XboxOne gamepad Control"
+  echo "	6  -  Menu Option 6: Start MMP1251 (Mod my pi) gamepad Contorl"
+  echo "    	7  -  Menu Option 7: View component info"
   echo "    	0  -  Exit"
   echo ""
   echo -n "  Enter selection: "
@@ -89,6 +99,8 @@ until [ "$selection" = "0" ]; do
     3 ) clear ; menu_option_three ; press_enter ;;
     4 ) clear ; menu_option_four ; press_enter ;;
     5 ) clear ; menu_option_five ; press_enter ;;
+    6 ) clear ; menu_option_six ; press_enter ;;
+    7 ) clear ; menu_option_seven ; press_enter ;;
     0 ) clear ; launcher_exit ;;
     * ) clear ; incorrect_selection ; press_enter ;;
   esac
