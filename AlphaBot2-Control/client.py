@@ -25,7 +25,7 @@ import sys
 from pynput import keyboard
 
 host = " "
-port = 8000
+port = 5000
 connected = False
 receivedBuffer = ""
 sendBuffer = ""
@@ -35,14 +35,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--server", help="Connect to server ip address --server 192.168.1.1", type=str)
 args = parser.parse_args()
 
-if(args.version):
-    version.show()
-    sys.exit()
-
 if(args.server != ""):
     host = args.server
 
-def quit():
+def appQuit():
     listener.stop()
     client_socket.close()
     sys.exit()
@@ -52,7 +48,7 @@ def on_press(key):
         sendBuff = "shutdown"
         client_socket.send(sendBuff.encode())
         connected = False
-        quit()
+        appQuit()
     
     elif(key == keyboard.Key.space):
         sendBuff = "space"
@@ -113,6 +109,10 @@ def on_press(key):
     elif(key == keyboard.KeyCode(113)):
         sendBuff = "q"
         client_socket.send(sendBuff.encode())
+        
+    elif(key == keyboard.KeyCode(101)):
+        sendBuff = "e"
+        client_socket.send(sendBuff.encode())
     
     else:
         sendBuff = "halt"
@@ -159,12 +159,15 @@ except Exception as e:
 listener = keyboard.Listener(on_press=on_press, on_release=on_release) 
 listener.start()
 
+print("AlphBot2 streaming and network control client version 0.1")
+print("RobotsGo web https://robotsgo.net/")
+print("RobotsGo webhttps://github.com/RobotsGo")
+print("")
+print("Video Stream will be available @ http://" + str(host) + ":8000")
+print("To use VLC etc, Video Stream will be available @ http://" + str(host) + ":8000/video_feed")
 
 while connected == True:
     receivedBuffer = client_socket.recv(1024).decode()
     print("From " + host + ":" + str(receivedBuffer))
-            
-        
     
-        
-    
+appQuit()
