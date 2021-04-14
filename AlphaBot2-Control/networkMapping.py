@@ -17,11 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import time
 import sys
 import socket
 import led
 import servo
 import kick
+import buzzer
 import motors as motor
 
 HOST_IP = ""
@@ -31,6 +33,13 @@ SEND_BUFF = ""
 SPEED_MODE = 1 
 SELECTED_COLOUR = 0  
 COLOURS =  ['off', 'Red', 'Green', 'Blue', 'White']
+
+
+def buzzerSoundOff():
+    buzzer.buzzOff()
+
+def buzzerSound():
+    buzzer.buzzOn()
 
 #Cycle through LED colours 'led.py'	
 def increaseColours():
@@ -86,8 +95,8 @@ def networkMappingStart():
 	print("RobotsGo web https://robotsgo.net/")
 	print("RobotsGo webhttps://github.com/RobotsGo")
 	print("")
-	print("Video Stream will be available @ http://" + str(HOST_IP) + ":5000")
-	print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":5000/video_feed")
+	print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
+	print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
 		 
 	print("Starting network control server....")
 	
@@ -106,12 +115,24 @@ def networkMappingStart():
 	#Accept new connection
 	conn, address = server_socket.accept()
 	
-	#Print ip of client when connected   
+	#Print ip of client when connected 
 	print("Connection from: " + str(address))
 	
 	#Set Connected so while loops will start.
 	connected = True
-
+	
+	#Buzz buzz when client is connected.
+    
+	buzzerSound()
+	time.sleep(0.1)
+	buzzerSoundOff()
+	time.sleep(0.1)
+	buzzerSound()
+	time.sleep(0.1)
+	buzzerSoundOff()
+    
+    
+    
 	#Main function loop, match receiveBuff data with functions in 'kick.py, alphaBot.py, servo.py and led.py
 	while True:
 	
@@ -219,6 +240,14 @@ def networkMappingStart():
 			print("Centre Camera")
 			servo.centreServos()
 			SEND_BUFF = "Centre Camera"
+			conn.send(SEND_BUFF.encode())
+			
+		elif RECEIVE_BUFF == "e":
+			print("Buzz")
+			buzzerSound()
+			time.sleep(0.1)
+			buzzerSoundOff()
+			SEND_BUFF = "Buzz"
 			conn.send(SEND_BUFF.encode())
 
 		elif RECEIVE_BUFF == "halt":
