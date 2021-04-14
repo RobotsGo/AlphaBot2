@@ -29,11 +29,6 @@ $sudo pip3 install imutils
 $sudo pip3 install numpy
 $sudo pip3 install pynput
 ```
-Clone: PiBorg GamePad Library
-```
-$ cd /home/pi
-$ git https://github.com/RobotsGo/Gamepad.git
-```
 Clone: RobotsGo AlphaBot2 repo
 ```
 $ cd /home/pi
@@ -76,7 +71,8 @@ wasd = Camera Up,Down,Left,Right    q = Centre Camera
 1 2 3 = Speed Modes   ,. = Change led's colours e = Buzzer
 
 ### TO DO
-Add XboxOne controller support   
+~~Add XboxOne controller support~~
+~~Request Add MMP1251 Mod My Pi gamepad support~~
 Move as much functions over to the gpiozero library   
 ~~Use the buzzer~~            
 ~~Logo overlay on video stream~~   
