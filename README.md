@@ -40,7 +40,7 @@ From the AlphaBot2-Control directory
 $ chmod +x start.sh
 $ chmod +x startStreamer.sh
 ```
-Then start the Launch Script    
+Then Launch the start script    
 ```
 $ ./start.sh 
 ```
@@ -48,7 +48,9 @@ From this script you can start:
 FLASK/OpenCV streammer :Default port 8000    
 Network Controller client
 Network Controller Server :Default port 5000    
-PS3 Controller Server         
+PS3 Controller Server
+XboxOne controller Server
+MMP1251 Mod My PI controller Server
 View version info and RobotsGo links
 
 Streamer and Network Controller Server will auto set the IP of the AlphaBot     
