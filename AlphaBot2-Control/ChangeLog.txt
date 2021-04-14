@@ -1,2 +1,11 @@
+***Version 0.1*** 14/04/2021
+Controllers.py + Gamepad.py pull in to root dir, no longer need to clone gamepad repo
+client.py - removed reference to version.py and add some more user information
+mmp1251Mapping.py - initial upload
+networkMapping.py - Added buzzer support
+ps3Mapping.py - Code clean up's
+start.sh - added new controller options XboxOne + mmp1251 (Mod My Pi) 
+xboxOneMapping.py - initial upload
+
 ***Version 0.1*** 08/04/2021
 Initial release
