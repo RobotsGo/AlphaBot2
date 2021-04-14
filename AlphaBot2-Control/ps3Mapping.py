@@ -18,7 +18,6 @@
 
 import sys
 import os
-sys.path.insert(0, "/home/pi/Gamepad")
 import Gamepad
 import time
 import led
@@ -139,14 +138,24 @@ def ps3MappingStart():
     print("RobotsGo web https://robotsgo.net/")
     print("RobotsGo webhttps://github.com/RobotsGo")
     print("")
-    print("Video Stream will be available @ http://" + str(HOST_IP) + ":5000")
-    print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":5000/video_feed")
+    print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
+    print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
     
     if not Gamepad.available():
         print('Please connect your gamepad...')
         while not Gamepad.available():
             time.sleep(1.0)
     gamepad = GAME_PAD_TYPE()
+    
+    #Buzz buzz when controller is connected.
+    buzzerSound()
+    time.sleep(0.1)
+    buzzerSoundOff()
+    time.sleep(0.1)
+    buzzerSound()
+    time.sleep(0.1)
+    buzzerSoundOff()
+    
     print('Gamepad connected, setup complete') 
     
     # Start the background updating
@@ -207,5 +216,4 @@ def ps3MappingStart():
     # Ensure the background thread is always terminated when we are done
         gamepad.disconnect()
 
-#Uncomment below to test standalone.
 ps3MappingStart()
