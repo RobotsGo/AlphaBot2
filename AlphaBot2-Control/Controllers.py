@@ -285,6 +285,27 @@ class MMP1251(Gamepad):
         }
         self._setupReverseMaps()
 
+class GameHat(Gamepad):
+    fullName = "WaveShare rpi GameHat "
+
+    def __init__(self, joystickNumber = 0):
+        Gamepad.__init__(self, joystickNumber)
+        self.axisNames = {
+            0: 'LEFT-X',
+            1: 'LEFT-Y'
+        }
+        self.buttonNames = {
+            0:  'A',
+            1:  'B',
+            2:  'X',
+            3:  'Y',
+            4:  'TR',
+            5:  'TL',
+            6:  'SELECT',
+            7:  'START'
+        }
+        self._setupReverseMaps()
+
 
 class example(Gamepad):
     # This class must have self.axisNames with a map
