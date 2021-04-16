@@ -30,10 +30,6 @@ vc.set(cv2.CAP_PROP_FPS,30)
 vc.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 vc.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-#To-Do get info from contorller program set below.
-speed = "FAST"
-led = "green"
-
 @app.route('/')
 def index():
     """Video streaming home page."""
@@ -49,8 +45,10 @@ def gen():
         
         font = cv2.FONT_HERSHEY_PLAIN
         logo = cv2.imread("rgLogo.png")
+        stats = cv2.imread("overlay.png")
         logoResized = resize(logo, width=50, height=27)
         logoWaterMark = cv2.cvtColor(logoResized, cv2.COLOR_BGR2BGRA)
+        statsHud = cv2.cvtColor(stats, cv2.COLOR_BGR2BGRA)
       
             #Get CPU temp in C
             
@@ -66,29 +64,33 @@ def gen():
         mem = psutil.virtual_memory()
         memUsage = mem.percent
 
-        ct = ("CPU Temp: " + str(cpuTemp) + "C")
-        cu = ("CPU Usage: " + str(cpuUsage) + "%")
-        mu = ("Memory Usage: " + str(memUsage) + "%")
-        sm = ("SpeedMode: " + speed)
-        lc = ("Led's: " + led)
+        ct = (str(int(cpuTemp)) + "C")
+        cu = (str(cpuUsage) + "%")
+        mu = (str(memUsage) + "%")
     
     #Inserting text on video
-        cv2.putText(frame, ct, (15, 15), font, 1, (255, 255, 255), 1, cv2.LINE_4)
-        cv2.putText(frame, cu, (15, 30), font, 1, (255, 255, 255), 1, cv2.LINE_4)
-        cv2.putText(frame, mu, (15, 45), font, 1, (255, 255, 255), 1, cv2.LINE_4)
-        cv2.putText(frame, sm, (15, 60), font, 1, (255, 255, 255), 1, cv2.LINE_4)
-        cv2.putText(frame, lc, (15, 75), font, 1, (255, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame, cu, (65, 40), font, 1.5, (0, 0, 0), 2, cv2.LINE_4)
+        cv2.putText(frame, ct, (198, 40), font, 1.5, (0, 0, 0), 2, cv2.LINE_4)
+        cv2.putText(frame, mu, (325, 40), font, 1.5, (0, 0, 0), 2, cv2.LINE_4)
     
     #Build overlay for logo i = X, j = Y
         frame_h, frame_w, frame_c = frame.shape
-        overlay = np.zeros((frame_h, frame_w, 4), dtype='uint8')
+        overlay = np.zeros((frame_h, frame_w, 4), dtype='uint8')*255
+        
         logoWaterMark_h, logoWaterMark_w, logoWaterMark_c = logoWaterMark.shape
         for i in range(0, logoWaterMark_h):
             for j in range(0, logoWaterMark_w):
                 if logoWaterMark[i, j][3] != 0:
                     overlay[i + 420, j + 580] = logoWaterMark[i, j]
                     
-        cv2.addWeighted(overlay, 1, frame, 1, 0, frame)
+        #Build overlay for logo i = X, j = Y
+        statsHud_h, statsHud_w, statsHud_c = statsHud.shape
+        for i in range(0, statsHud_h):
+            for j in range(0, statsHud_w):
+                if statsHud[i, j][3] != 0:
+                    overlay[i + 0, j + 0] = statsHud[i, j]
+                    
+        cv2.addWeighted(frame, 1, overlay, 1, 0, frame)
         
         encode_return_code, image_buffer = cv2.imencode('.jpg', frame)
         io_buf = io.BytesIO(image_buffer)
