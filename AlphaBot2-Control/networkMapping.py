@@ -81,6 +81,7 @@ def setSpeed():
 		motor.Speed(0.2, 0.2)
 				
 def networkMappingStart():
+	servo.centreServos()
 #Get real server ip address not localhost
 	global SPEED_MODE
 	
