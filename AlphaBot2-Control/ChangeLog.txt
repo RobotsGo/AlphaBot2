@@ -1,3 +1,13 @@
+***Version 0.1***17/04/2021
+small fixes to gameHatMapping.py + startGameHatClient.sh
+
+***Version 0.1***16/04/2021
+gameHatMapping.py - initial upload
+startGameHatClient.sh - initial upload
+networkMapping.py - fixes
+streamer.py - new overlaty graphics **needs work**
+Controllers.py - Added GameHat support
+
 ***Version 0.1*** 14/04/2021
 Controllers.py + Gamepad.py pulled in to root dir, no longer need to clone gamepad repo
 client.py - removed reference to version.py and add some more user information
