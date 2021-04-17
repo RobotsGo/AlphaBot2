@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+
 # Written by spoonie (Rick Spooner) for RobotsGo 
 
 # This program is free software: you can redistribute it and/or modify
@@ -23,22 +24,8 @@ import socket
 import sys
 import Gamepad
 
-#import sys
-#import os
-#import Gamepad
-#import time
-#import led
-#import servo
-#import kick
-#import motors as motor
-#import socket
-#import buzzer
- 
-RUNNING = True
-SPEED_MODE = 2 
-
-SERVER_IP = " "
-PORT = 5000
+host = " "
+port = 5000
 connected = False
 receivedBuffer = ""
 sendBuffer = ""
@@ -49,132 +36,121 @@ parser.add_argument("-s", "--server", help="Connect to server ip address --serve
 args = parser.parse_args()
 
 if(args.server != ""):
-    SERVER_IP = args.server
-    
+    host = args.server
+
 def appQuit():
-    RUNNING = False
+    #listener.stop()
+    sendBuff = "shutdown"
+    client_socket.send(sendBuff.encode())
     connected = False
     client_socket.close()
     sys.exit()
 
-def centreServo():
-    sendBuff = "q"
+def halt():
+    sendBuff = "halt"
     client_socket.send(sendBuff.encode())
 
-def kickButtonPressed():
+def speedMode():
+    sendBuff = "2"
+    client_socket.send(sendBuff.encode())
+
+def moveForwards():
+    sendBuff = "up"
+    client_socket.send(sendBuff.encode())
+
+def moveBackwards():
+    sendBuff = "down"
+    client_socket.send(sendBuff.encode())  
+    
+def moveLeft():
+    sendBuff = "left"
+    client_socket.send(sendBuff.encode())
+
+def moveRight():
+    sendBuff = "right"
+    client_socket.send(sendBuff.encode())
+
+def kick():
     sendBuff = "space"
     client_socket.send(sendBuff.encode())
 
-#def setSpeed():
+def centreServo():
+    sendBuff = "q"
+    client_socket.send(sendBuff.encode())
     
-    #if (SPEED_MODE == 1):
-	    #motor.Speed(0.2, 0.2)
-
-    #elif(SPEED_MODE == 2):
-	    #motor.Speed(0.5, 0.5)
+def cameraVertical(num):
+    if num < 0:
+        sendBuff = "w"
+        client_socket.send(sendBuff.encode())
+    
+    if num > 0:
+        sendBuff = "s"
+        client_socket.send(sendBuff.encode())
+    
+def cameraHorizontal(num):
+    if num > 0:
+        sendBuff = "a"
+        client_socket.send(sendBuff.encode())
+    
+    if num < 0:
+        sendBuff = "d"
+        client_socket.send(sendBuff.encode())
         
-    #elif(SPEED_MODE == 3):
-	    #motor.Speed(0.8, 0.8)
-    
-    #else:
-	    #motor.Speed(0.2, 0.2)
-        
-def exitButtonPressed():
-    global RUNNING
-    RUNNING = False
-    sys.exit()
+try:        
+    client_socket = socket.socket()  # instantiate
+    client_socket.connect((host, port))  # connect to the server
+    connected = True
+except Exception as e:
+        print(e.message)
 
-def gameHatStart():
-    
-    GAME_PAD_TYPE = Gamepad.GameHat
-    BUTTON_EXIT = 'START'
-    BUTTON_FORWARDS = 'X'
-    BUTTON_BACKWARDS = 'B'
-    STEERING_LEFT = 'Y'
-    STEERING_RIGHT = 'A'
-    CAMERA_VERTICAL = 'LEFT-Y'
-    CAMERA_HORIZONTAL = 'LEFT-X'
-    BUTTON_KICK = 'TR'
-    BUTTON_CENTRE_SERVOS = 'SELECT'
-    BUTTON_BUZZER = 'TL'
-    POLL_INTERVAL = 0.1
-    
-    try:
-        global client_socket
-        client_socket = socket.socket()  # instantiate
-        client_socket.connect((SERVER_IP, PORT))  # connect to the server
-        connected = True
+speedMode()
 
-    except Exception as e:
-	    print(e)
-    
-    print("AlphBot2 streaming and WaveShare GameHat control server version 0.1")
-    print("RobotsGo web https://robotsgo.net/")
-    print("RobotsGo webhttps://github.com/RobotsGo")
-    print("")
-    print("Video Stream will be available @ http://" + str(SERVER_IP) + ":8000")
-    print("To use VLC etc, Video Stream will be available @ http://" + str(SERVER_IP) + ":8000/video_feed")
-    
-    if not Gamepad.available():
+GAME_PAD_TYPE = Gamepad.GameHat
+BUTTON_EXIT = 'START'
+FORWARDS = 'X'
+BACKWARDS = 'B'
+STEERING_LEFT = 'Y'
+STEERING_RIGHT = 'A'
+CAMERA_VERTICAL = 'LEFT-Y'
+CAMERA_HORIZONTAL = 'LEFT-X'
+CAMERA_CENTER = 'TL'
+BUTTON_KICK = 'TR'
+BUTTON_CENTRE_SERVOS = 'SELECT'
+POLL_INTERVAL = 0.1
+
+if not Gamepad.available():
         print('Please connect your gamepad...')
         while not Gamepad.available():
             time.sleep(1.0)
-    gamepad = GAME_PAD_TYPE()
-    
-    #Buzz buzz when controller is connected.
-    #buzzerSound()
-    #time.sleep(0.1)
-    #buzzerSoundOff()
-    #time.sleep(0.1)
-    #buzzerSound()
-    #time.sleep(0.1)
-    #buzzerSoundOff()
-    
-    print('Gamepad connected, setup complete') 
-    
-    # Start the background updating
-    gamepad.startBackgroundUpdates()
-    #gamepad.addButtonPressedHandler(ADJUST_SPEED_UP, increaseSpeed)
-    #gamepad.addButtonPressedHandler(ADJUST_SPEED_DOWN, decreaseSpeed)
-    #gamepad.addButtonPressedHandler(CHANGE_COLOUR_UP, increaseColours)
-    #gamepad.addButtonPressedHandler(CHANGE_COLOUR_DOWN, decreaseColours)
-    gamepad.addButtonPressedHandler(BUTTON_KICK, kickButtonPressed)
-    gamepad.addButtonPressedHandler(BUTTON_EXIT, exitButtonPressed)
-    gamepad.addButtonPressedHandler(BUTTON_CENTRE_SERVOS, centreServo)
-    #gamepad.addButtonPressedHandler(BUTTON_BUZZER, buzzerSound)
-    #gamepad.addButtonReleasedHandler(BUTTON_BUZZER, buzzerSoundOff)
-    
-    # Joystick events handled in the background
-    try:
-	    while RUNNING and gamepad.isConnected():
-		    
-		    if gamepad.axis(CAMERA_VERTICAL) == -1:
-			    sendBuff = "w"
-                client_socket.send(sendBuff.encode()) 
-            
-		    elif gamepad.axis(CAMERA_VERTICAL) == 1:
-			    sendBuff = "s"
-                client_socket.send(sendBuff.encode())
-            
-		    elif gamepad.axis(CAMERA_HORIZONTAL) == -1:
-			    sendBuff = "d"
-                client_socket.send(sendBuff.encode())
-                
-		    elif gamepad.axis(CAMERA_HORIZONTAL) == 1:
-			    sendBuff = "a"
-                client_socket.send(sendBuff.encode())
-        
-		    else:
-			    sendBuff = "halt"
-                client_socket.send(sendBuff.encode())
-        
-	    time.sleep(POLL_INTERVAL)
-        
-    except Exception as e:
-            print(e.message)
-    finally:
-    # Ensure the background thread is always terminated when we are done
-        gamepad.disconnect()
 
-ps3MappingStart()
- 
+gamepad = GAME_PAD_TYPE()
+
+gamepad.startBackgroundUpdates()
+gamepad.addButtonPressedHandler(BUTTON_EXIT, appQuit)
+gamepad.addButtonPressedHandler(FORWARDS, moveForwards)
+gamepad.addButtonReleasedHandler(FORWARDS, halt)
+gamepad.addButtonPressedHandler(BACKWARDS, moveBackwards)
+gamepad.addButtonReleasedHandler(BACKWARDS, halt)
+gamepad.addButtonPressedHandler(STEERING_LEFT, moveLeft)
+gamepad.addButtonReleasedHandler(STEERING_LEFT, halt)
+gamepad.addButtonPressedHandler(STEERING_RIGHT, moveRight)
+gamepad.addButtonReleasedHandler(STEERING_RIGHT, halt)
+gamepad.addButtonPressedHandler(BUTTON_KICK, kick)
+gamepad.addButtonReleasedHandler(BUTTON_KICK, halt)
+gamepad.addButtonPressedHandler(BUTTON_CENTRE_SERVOS, centreServo)
+gamepad.addButtonReleasedHandler(BUTTON_CENTRE_SERVOS, halt)
+gamepad.addAxisMovedHandler(CAMERA_VERTICAL, cameraVertical)
+gamepad.addAxisMovedHandler(CAMERA_HORIZONTAL, cameraHorizontal)
+
+print("AlphBot2 WaveShare rpi GameHat control client version 0.1")
+print("RobotsGo web https://robotsgo.net/")
+print("RobotsGo webhttps://github.com/RobotsGo")
+print("")
+print("Video Stream will be available @ http://" + str(host) + ":8000")
+print("To use VLC etc, Video Stream will be available @ http://" + str(host) + ":8000/video_feed")
+
+while connected == True:
+    receivedBuffer = client_socket.recv(1024).decode()
+    print("From " + host + ":" + str(receivedBuffer))
+    
+appQuit()
