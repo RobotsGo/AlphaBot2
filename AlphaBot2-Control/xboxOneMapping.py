@@ -26,6 +26,7 @@ import kick
 import motors as motor
 import socket
 import buzzer
+import netifaces
  
 RUNNING = True
 SPEED_MODE = 1 
@@ -46,73 +47,73 @@ def kickButtonPressed():
 
 def selectSpeed(num):
     if num < 0:
-	    increaseSpeed()
+        increaseSpeed()
     
     if num > 0:
-	    decreaseSpeed()
+        decreaseSpeed()
 
 def selectColour(num):
     if num > 0:
-	    increaseColours()
+        increaseColours()
     
     if num < 0:
-	    decreaseColours()
+        decreaseColours()
 
 def increaseSpeed():
-	global SPEED_MODE
-	if SPEED_MODE < 3:
-		SPEED_MODE = (SPEED_MODE + 1) 
-		setSpeed()
-		print('Speed mode ' + str(SPEED_MODE))
-	
-	else:
-		print('Speed mode ' + str(SPEED_MODE))
+    global SPEED_MODE
+    if SPEED_MODE < 3:
+        SPEED_MODE = (SPEED_MODE + 1) 
+        setSpeed()
+        print('Speed mode ' + str(SPEED_MODE))
+    
+    else:
+        print('Speed mode ' + str(SPEED_MODE))
 
 def decreaseSpeed():
-	global SPEED_MODE
-	if SPEED_MODE > 1:
-		SPEED_MODE = (SPEED_MODE - 1)
-		setSpeed() 
-		print('Speed mode ' + str(SPEED_MODE))
+    global SPEED_MODE
+    if SPEED_MODE > 1:
+        SPEED_MODE = (SPEED_MODE - 1)
+        setSpeed() 
+        print('Speed mode ' + str(SPEED_MODE))
             
-	else:
-		print('Speed mode ' + str(SPEED_MODE))  
+    else:
+        print('Speed mode ' + str(SPEED_MODE))  
 
 def increaseColours():
-	global SELECTED_COLOUR
-	global COLOURS
-	if SELECTED_COLOUR < 4:
-		SELECTED_COLOUR = (SELECTED_COLOUR + 1)
-		led.setColour(SELECTED_COLOUR)
-		print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR)) 
+    global SELECTED_COLOUR
+    global COLOURS
+    if SELECTED_COLOUR < 4:
+        SELECTED_COLOUR = (SELECTED_COLOUR + 1)
+        led.setColour(SELECTED_COLOUR)
+        print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR)) 
             
-	else:
-		print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
+    else:
+        print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
 
 def decreaseColours():
-	global SELECTED_COLOUR
-	global COLOURS
-	if SELECTED_COLOUR > 0:
-		SELECTED_COLOUR = (SELECTED_COLOUR - 1)
-		led.setColour(SELECTED_COLOUR) 
-		print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
+    global SELECTED_COLOUR
+    global COLOURS
+    if SELECTED_COLOUR > 0:
+        SELECTED_COLOUR = (SELECTED_COLOUR - 1)
+        led.setColour(SELECTED_COLOUR) 
+        print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
             
-	else:
-		print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
+    else:
+        print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
 
 def setSpeed():
     
     if (SPEED_MODE == 1):
-	    motor.Speed(0.2, 0.2)
+        motor.Speed(0.2, 0.2)
 
     elif(SPEED_MODE == 2):
-	    motor.Speed(0.5, 0.5)
+        motor.Speed(0.5, 0.5)
         
     elif(SPEED_MODE == 3):
-	    motor.Speed(0.8, 0.8)
+        motor.Speed(0.8, 0.8)
     
     else:
-	    motor.Speed(0.2, 0.2)
+        motor.Speed(0.2, 0.2)
         
 def exitButtonPressed():
     led.clearLed()
@@ -146,19 +147,17 @@ def xboxOneMappingStart():
     BUTTON_BUZZER = 'X'
     POLL_INTERVAL = 0.1
     
-    try:   
-	    HOST_IP = ((([ip for ip in socket.gethostbyname_ex(socket.gethostname())
-		    [2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)),
-		    s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0])
-    except Exception as e:
-	    print("Error occurred trying to get IP Address. ERROR MESSAGE: " + e)
+    INT_FACE = netifaces.ifaddresses('wlan0')
+    HOST_IP = INT_FACE[netifaces.AF_INET][0]['addr']
     
     print("AlphBot2 streaming and XboxOne control server version 0.1")
     print("RobotsGo web https://robotsgo.net/")
     print("RobotsGo webhttps://github.com/RobotsGo")
     print("")
-    print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
-    print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
+    
+    if HOST_IP != " ":
+        print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
+        print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
     
     if not Gamepad.available():
         print('Please connect your gamepad...')
@@ -189,44 +188,44 @@ def xboxOneMappingStart():
     
     # Joystick events handled in the background
     try:
-	    while RUNNING and gamepad.isConnected():
-		
-		    if gamepad.axis(TRIGGER_BACKWARDS) == 1:
-			    print('Backwards')
-			    motor.backwards()
+        while RUNNING and gamepad.isConnected():
 
-		    elif gamepad.axis(TRIGGER_FORWARDS) == 1:
-			    print('Forwards')
-			    motor.forwards()
-            
-		    elif gamepad.axis(STEERING) == 1:
-			    print('Right')
-			    motor.right()
+            if gamepad.axis(TRIGGER_BACKWARDS) == 1:
+                print('Backwards')
+                motor.backwards()
 
-		    elif gamepad.axis(STEERING) == -1:
-			    print('Left')
-			    motor.left()
+            elif gamepad.axis(TRIGGER_FORWARDS) == 1:
+                print('Forwards')
+                motor.forwards()
             
-		    elif gamepad.axis(CAMERA_VERTICAL) == -1:
-			    servo.verticalUp()
-			    print('Camera UP ') 
+            elif gamepad.axis(STEERING) == 1:
+                print('Right')
+                motor.right()
+
+            elif gamepad.axis(STEERING) == -1:
+                print('Left')
+                motor.left()
             
-		    elif gamepad.axis(CAMERA_VERTICAL) == 1:
-			    servo.verticalDown()
-			    print('Camera Down ')
+            elif gamepad.axis(CAMERA_VERTICAL) == -1:
+                servo.verticalUp()
+                print('Camera UP ') 
             
-		    elif gamepad.axis(CAMERA_HORIZONTAL) == -1:
-			    servo.horizontalLeft()
-			    print('Camera Left ')
+            elif gamepad.axis(CAMERA_VERTICAL) == 1:
+                servo.verticalDown()
+                print('Camera Down ')
+            
+            elif gamepad.axis(CAMERA_HORIZONTAL) == -1:
+                servo.horizontalLeft()
+                print('Camera Left ')
                 
-		    elif gamepad.axis(CAMERA_HORIZONTAL) == 1:
-			    servo.horizontalRight()
-			    print('Camera Right ')
+            elif gamepad.axis(CAMERA_HORIZONTAL) == 1:
+                servo.horizontalRight()
+                print('Camera Right ')
         
-		    else:
-			    motor.stopMotor();
+            else:
+                motor.stopMotor();
         
-	    time.sleep(POLL_INTERVAL)
+        time.sleep(POLL_INTERVAL)
         
     except Exception as e:
             print(e.message)
