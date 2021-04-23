@@ -1,3 +1,9 @@
+***Version 0.1***25/04/2021
+Testing with setup script
+Addded netifaces to mmp1251Mapping.py + networkMapping.py +
+ps3Mapping.py + xboxOneMapping.py To help get ip when setup as AP
+changed servo movment from 5 to 2 in servo.py
+
 ***Version 0.1***17/04/2021
 small fixes to gameHatMapping.py + startGameHatClient.sh
 
