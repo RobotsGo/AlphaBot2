@@ -32,39 +32,39 @@ hAngel = 0
 vAngel = 0
 
 def centreServos():
-	kit.servo[0].angle = centreHorizontal
-	kit.servo[1].angle = centreVertical
-	hAngel = int(kit.servo[0].angle)
-	vAngel = int(kit.servo[1].angle)
-	
+    kit.servo[0].angle = centreHorizontal
+    kit.servo[1].angle = centreVertical
+    hAngel = int(kit.servo[0].angle)
+    vAngel = int(kit.servo[1].angle)
+
 def horizontalLeft():
-	hAngel = int(kit.servo[0].angle)
-	
-	if hAngel < 175:  
-		kit.servo[0].angle = (int(hAngel) + 5)
-		
-	hAngel = int(kit.servo[0].angle)
-	
+    hAngel = int(kit.servo[0].angle)
+
+    if hAngel < 175:  
+        kit.servo[0].angle = (int(hAngel) + 2)
+
+    hAngel = int(kit.servo[0].angle)
+
 def horizontalRight():
-	hAngel = int(kit.servo[0].angle)
-	
-	if hAngel > 5:
-		kit.servo[0].angle = (int(hAngel) - 5)
-		
-	hAngel = int(kit.servo[0].angle)
+    hAngel = int(kit.servo[0].angle)
+    
+    if hAngel > 5:
+        kit.servo[0].angle = (int(hAngel) - 2)
+
+    hAngel = int(kit.servo[0].angle)
 
 def verticalUp():
-	vAngel = int(kit.servo[1].angle)
-	
-	if vAngel > 5:
-		kit.servo[1].angle = (int(vAngel) - 5)
-		
-	vAngel = int(kit.servo[1].angle)
-	
+    vAngel = int(kit.servo[1].angle)
+    
+    if vAngel > 5:
+        kit.servo[1].angle = (int(vAngel) - 2)
+
+    vAngel = int(kit.servo[1].angle)
+    
 def verticalDown():
-	vAngel = int(kit.servo[1].angle)
-	
-	if vAngel < 175:
-		kit.servo[1].angle = (int(vAngel) + 5)
-	
-	vAngel = int(kit.servo[1].angle)
+    vAngel = int(kit.servo[1].angle)
+    
+    if vAngel < 175:
+        kit.servo[1].angle = (int(vAngel) + 2)
+    
+    vAngel = int(kit.servo[1].angle)
