@@ -9,50 +9,38 @@ streaming the AB2 camera with openCV support.
 
 For python3 only!!!!!
 
-## Getting started - AlphaBot
-Once your AlphaBot2 is all setup with Raspberry Pi OS.
+## Getting started
+Set your AlphaBot2 up with Raspberry Pi OS https://www.raspberrypi.org/software/.   
+Log in to your AlphaBot2 via your preferred method.      
+Download the AlphaBot2-Setup.sh script make it executable and then run the script.   
+**You are required to set the hostname and wifi country setting using raspi-config the script will load raspi-config to make   
+these two changes and when then raspi-config exits the script will continue.**    
+```
+$ cd ~
+$ wget -L https://raw.githubusercontent.com/RobotsGo/AlphaBot2/main/AlphaBot2-Setup.sh
+$ chmod +x AlphaBot2-Setup.sh
+$ ./AlphaBot2-Setup.sh
+```
+This script will allow you to:    
+* Update rpi os, install all needed dependencies, clone RobotsGo/AlphaBot2 repo, enable ssh, enable required hardware support
+* Setup Bluetooth XboxOne controller support, download and compile sixpar for PS3 Bluetooth pairing     
+* Install all needed dependencies for client network control, clone RobotsGo's AlphaBot2 repo    
+* Set the AlphaBot 2 up as a wifi AP with DHCP, WPA, Channel, SSID    
 
-Update your pi to the latest Raspberry Pi OS.
-```
-$ sudo apt update
-$ sudo apt full-upgrade
-```
-Install needed dependencies. 
-```
-$sudo apt install python-gpiozero
-$sudo pip3 install opencv-python 
-$sudo pip3 install flask
-$sudo pip3 install rpi_ws281x
-$sudo pip3 install adafruit-circuitpython-servokit
-$sudo pip3 install psutil
-$sudo pip3 install imutils
-$sudo pip3 install numpy
-$sudo pip3 install pynput
-```
-Clone: RobotsGo AlphaBot2 repo
-```
-$ cd /home/pi
-$ git clone https://github.com/RobotsGo/AlphaBot2.git
-```
 ### Running AlphaBot2-Control
-From the AlphaBot2-Control directory 
-```
-$ chmod +x start.sh
-$ chmod +x startStreamer.sh
-$ chmod +x startGameHatClient.sh
-```
-Then Launch the start script    
+
+Launch the start script from ~/AlphaBot2/AlphaBot2-Control/   
 ```
 $ ./start.sh 
 ```
 From this script you can start:      
-FLASK/OpenCV streammer :Default port 8000    
-Network Controller client      
-Network Controller Server :Default port 5000        
-PS3 Controller Server    
-XboxOne controller Server    
-MMP1251 Mod My PI controller Server   
-View version info and RobotsGo links    
+* FLASK/OpenCV streammer :Default port 8000    
+* Network Controller client      
+* Network Controller Server :Default port 5000        
+* PS3 Controller Server    
+* XboxOne Controller Server    
+* MMP1251 Mod My PI controller Server   
+* View version info and RobotsGo links    
 
 Streamer and Network Controller Server will auto set the IP of the AlphaBot     
 When script exits the Streamer should stop
@@ -138,7 +126,8 @@ $ ./startGameHatClient.sh
 ~~Logo overlay on video stream~~   
 Use the IR sensors   
 Share data between the controller application and the streamer application (colour, speed modes)    
-Get images and videos of unit in action       
-Sort out rpi os install/script for GameHat + AB2   
+~~Get images and videos of unit in action~~       
+~~Sort out rpi os install/script for GameHat + AB2~~
+Improve camera streaming performance - investagate other ways   
 Remove the semi transparent effect on the opencv overlay   
 Build all this in to a wiki   
