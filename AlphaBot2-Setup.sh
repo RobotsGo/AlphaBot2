@@ -112,6 +112,13 @@ git clone https://github.com/RobotsGo/AlphaBot2.git
 
 echo " "
 
+echo "Setting scripts to executable..."
+chmod +x ~/AlphaBot2/AlphaBot2-Control/start.sh
+chmod +x ~/AlphaBot2/AlphaBot2-Control/startStreamer.sh
+chmod +x ~/AlphaBot2/AlphaBot2-Control/startGameHatClient.sh
+
+echo " "
+
 echo "Done........"
 exit
 }
@@ -137,10 +144,10 @@ read CHANNEL
 
 echo " "
 
-sudo apt install hostapd
+sudo apt-get install -y hostapd
 sudo systemctl unmask hostapd
 sudo systemctl enable hostapd
-sudo apt install dnsmasq
+sudo apt-get install -y dnsmasq
 sudo systemctl enable dnsmasq
 
 echo " "
@@ -162,7 +169,7 @@ echo "address=/"$HOST".wlan/10.13.69.1" | sudo tee -a /etc/dnsmasq.conf
 
 echo ""
 
-echo"Building hostap config..."
+echo "Building hostap config..."
 sudo touch /etc/hostapd/hostapd.conf
 echo "country_code="$CC | sudo tee -a /etc/hostapd/hostapd.conf
 echo "interface=wlan0" | sudo tee -a /etc/hostapd/hostapd.conf
