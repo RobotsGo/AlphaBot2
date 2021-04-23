@@ -22,8 +22,8 @@ $ chmod +x AlphaBot2-Setup.sh
 $ ./AlphaBot2-Setup.sh
 ```
 This script will allow you to:    
-* Update rpi os, install all needed dependencies, clone RobotsGo/AlphaBot2 repo, enable ssh, enable required hardware support
-* Setup Bluetooth XboxOne controller support, download and compile sixpar for PS3 Bluetooth pairing     
+* Update rpi os, install all needed dependencies, xrdp, clone RobotsGo/AlphaBot2 repo, enable ssh, enable required hardware support
+* Removes un-needed packages, setup Bluetooth XboxOne controller support, download and compile sixpair for PS3 Bluetooth pairing     
 * Install all needed dependencies for client network control, clone RobotsGo's AlphaBot2 repo    
 * Set the AlphaBot 2 up as a wifi AP with DHCP, WPA, Channel, SSID    
 
