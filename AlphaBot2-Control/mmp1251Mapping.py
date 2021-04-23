@@ -26,6 +26,7 @@ import kick
 import motors as motor
 import socket
 import buzzer
+import netifaces
  
 RUNNING = True
 SPEED_MODE = 1 
@@ -146,19 +147,17 @@ def MMP1251Start():
     BUTTON_BUZZER = 'X'
     POLL_INTERVAL = 0.1
     
-    try:   
-	    HOST_IP = ((([ip for ip in socket.gethostbyname_ex(socket.gethostname())
-		    [2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)),
-		    s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0])
-    except Exception as e:
-	    print("Error occurred trying to get IP Address. ERROR MESSAGE: " + e)
+    INT_FACE = netifaces.ifaddresses('wlan0')
+    HOST_IP = INT_FACE[netifaces.AF_INET][0]['addr']
     
     print("AlphBot2 streaming and MMP1251 Mod My Pi control server version 0.1")
     print("RobotsGo web https://robotsgo.net/")
     print("RobotsGo webhttps://github.com/RobotsGo")
     print("")
-    print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
-    print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
+    
+    if HOST_IP != " ":
+        print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
+        print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
     
     if not Gamepad.available():
         print('Please connect your gamepad...')
@@ -189,44 +188,44 @@ def MMP1251Start():
     
     # Joystick events handled in the background
     try:
-	    while RUNNING and gamepad.isConnected():
-		
-		    if gamepad.axis(TRIGGER_BACKWARDS) == 1:
-			    print('Backwards')
-			    motor.backwards()
+        while RUNNING and gamepad.isConnected():
+        
+            if gamepad.axis(TRIGGER_BACKWARDS) == 1:
+                print('Backwards')
+                motor.backwards()
 
-		    elif gamepad.axis(TRIGGER_FORWARDS) == 1:
-			    print('Forwards')
-			    motor.forwards()
+            elif gamepad.axis(TRIGGER_FORWARDS) == 1:
+                print('Forwards')
+                motor.forwards()
             
-		    elif gamepad.axis(STEERING) == 1:
-			    print('Right')
-			    motor.right()
+            elif gamepad.axis(STEERING) == 1:
+                print('Right')
+                motor.right()
 
-		    elif gamepad.axis(STEERING) == -1:
-			    print('Left')
-			    motor.left()
+            elif gamepad.axis(STEERING) == -1:
+                print('Left')
+                motor.left()
             
-		    elif gamepad.axis(CAMERA_VERTICAL) == -1:
-			    servo.verticalUp()
-			    print('Camera UP ') 
+            elif gamepad.axis(CAMERA_VERTICAL) == -1:
+                servo.verticalUp()
+                print('Camera UP ') 
             
-		    elif gamepad.axis(CAMERA_VERTICAL) == 1:
-			    servo.verticalDown()
-			    print('Camera Down ')
+            elif gamepad.axis(CAMERA_VERTICAL) == 1:
+                servo.verticalDown()
+                print('Camera Down ')
             
-		    elif gamepad.axis(CAMERA_HORIZONTAL) == -1:
-			    servo.horizontalLeft()
-			    print('Camera Left ')
+            elif gamepad.axis(CAMERA_HORIZONTAL) == -1:
+                servo.horizontalLeft()
+                print('Camera Left ')
                 
-		    elif gamepad.axis(CAMERA_HORIZONTAL) == 1:
-			    servo.horizontalRight()
-			    print('Camera Right ')
+            elif gamepad.axis(CAMERA_HORIZONTAL) == 1:
+                servo.horizontalRight()
+                print('Camera Right ')
         
-		    else:
-			    motor.stopMotor();
+            else:
+                motor.stopMotor();
         
-	    time.sleep(POLL_INTERVAL)
+        time.sleep(POLL_INTERVAL)
         
     except Exception as e:
             print(e.message)
