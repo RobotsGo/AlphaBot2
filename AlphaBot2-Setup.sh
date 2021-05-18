@@ -16,13 +16,18 @@
 # Written by spoonie (Rick Spooner) for RobotsGo
 
 menu_option_one() {
-echo "Script will now launch raspi-config"
-echo "Please set you desired hostname from System Options-->Hostname"
-echo "Please set your wifi country code from System Options-->Wireless LAN-->WLAN Country"
-echo "Once raspi-config exits the script will continue"
-echo "Press any key to continue.........."
-read
-sudo raspi-config
+echo ""
+
+echo "Set your desired Hostname"
+read Hostname
+
+echo " "
+
+echo "SET WIFI country code - See https://en.wikipedia.org/wiki/ISO_3166-1"
+echo "Rember your country code as it will needed later for hostap setup"
+read CCrpi
+
+echo " "
 
 echo "Removing uneeded packages..."
 sudo apt-get remove -y realvnc-vnc-server
@@ -30,7 +35,7 @@ sudo apt-get remove -y chromium-browser
 sudo apt-get remove -y chromium-browser-l10n
 sudo apt-get remove -y chromium-codecs-ffmpeg-extra
 
-echo ""
+echo " "
 
 echo "Checking system updates..."
 sudo apt-get update 
@@ -45,25 +50,31 @@ sudo systemctl start ssh
 echo " "
 
 echo "Installing AbphaBot2 RobotsGo required Dependencies..."
+sudo apt-get install -y make gcc
 sudo apt-get install -y python3
 sudo apt-get install -y python3-pip 
 sudo apt-get install -y python3-gpiozero
 sudo apt-get install -y xrdp
 sudo apt-get install -y xboxdrv
 sudo apt-get install -y libusb-dev
-sudo apt-get install -y libatlas-base-dev
-sudo pip3 install opencv-python 
-sudo pip3 install flask
+#sudo apt-get install -y libatlas-base-dev //expermintal work 
+sudo apt-get install -y libevent-dev
+sudo apt-get install -y libjpeg8-dev
+sudo apt-get install -y libbsd-dev
+sudo apt-get install -y libraspberrypi-dev
+sudo apt-get install -y libgpiod
+#sudo pip3 install opencv-python //expermintal work
+#sudo pip3 install flask //expermintal work
 sudo pip3 install rpi_ws281x
 sudo pip3 install adafruit-circuitpython-servokit
 sudo pip3 install psutil
-sudo pip3 install imutils
-sudo pip3 install numpy
+#sudo pip3 install imutils //expermintal work
+#sudo pip3 install numpy //expermintal work
 sudo pip3 install pynput
 sudo pip3 install netifaces
 
 echo " "
-
+ 
 echo "Add XboxOne controller bluetooh config..."
 echo 'options bluetooth disable_ertm=Y' | sudo tee -a /etc/modprobe.d/bluetooth.conf
 
@@ -90,11 +101,36 @@ chmod +x ~/AlphaBot2/AlphaBot2-Control/startGameHatClient.sh
 
 echo " "
 
+echo "Clone and build ustreamer with omx support"
+cd ~
+git clone --depth=1 https://github.com/pikvm/ustreamer
+cd ~/AlphaBot2/AlphaBot2-Control/ustreamer
+make WITH_OMX=1
+sudo make install
+
+echo " "
+
 echo "Adding needed entries to config.txt"
 echo "gpu_mem_256" | sudo tee -a /boot/config.txt
 echo "device_tree_param=spi=on" | sudo tee -a /boot/config.txt
 echo "dtparam=i2c_arm=on" | sudo tee -a /boot/config.txt
 echo "start_x=1" | sudo tee -a /boot/config.txt
+
+echo " "
+
+echo "Setting Hostname"
+sudo hostnamectl set-hostname $Hostname
+echo "127.0.0.1 "$Hostname | sudo tee -a /etc/hosts
+
+echo " "
+
+echo "Setting wifi wpa Country Code"
+echo "country="$CCrpi | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+sudo iw reg set $CCrpi
+
+echo " "
+echo "Unblocking wifi"
+sudo rfkill unblock wifi
 
 echo "Please restart for changes to take effect."
 exit
@@ -139,11 +175,6 @@ read CC
 
 echo " "
 
-echo "SET WIFI Channel"
-read CHANNEL
-
-echo " "
-
 sudo apt-get install -y hostapd
 sudo systemctl unmask hostapd
 sudo systemctl enable hostapd
@@ -174,9 +205,13 @@ sudo touch /etc/hostapd/hostapd.conf
 echo "country_code="$CC | sudo tee -a /etc/hostapd/hostapd.conf
 echo "interface=wlan0" | sudo tee -a /etc/hostapd/hostapd.conf
 echo "ssid="$SSID | sudo tee -a /etc/hostapd/hostapd.conf
-echo "hw_mode=g" | sudo tee -a /etc/hostapd/hostapd.conf
-echo "channel="$CHANNEL | sudo tee -a /etc/hostapd/hostapd.conf
+echo "hw_mode=a" | sudo tee -a /etc/hostapd/hostapd.conf
+echo "channel=48" | sudo tee -a /etc/hostapd/hostapd.conf
 echo "macaddr_acl=0" | sudo tee -a /etc/hostapd/hostapd.conf
+echo "ieee80211d=1" | sudo tee -a /etc/hostapd/hostapd.conf
+echo "ieee80211n=1" | sudo tee -a /etc/hostapd/hostapd.conf
+echo "ieee80211ac=1" | sudo tee -a /etc/hostapd/hostapd.conf
+echo "wmm_enabled=1" | sudo tee -a /etc/hostapd/hostapd.conf
 echo "auth_algs=1" | sudo tee -a /etc/hostapd/hostapd.conf
 echo "ignore_broadcast_ssid=0" |sudo tee -a /etc/hostapd/hostapd.conf
 echo "wpa=2" | sudo tee -a /etc/hostapd/hostapd.conf
@@ -210,7 +245,7 @@ menu_option_four() {
 	echo "@@@@@@@@########(((@@@////(((((@@@@@@@@@"
 	echo "@@@@@@@@###########(@@@///((((((#@@@@@@@"
 	echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-	echo "AlphaBot2-Setup Version 0.1"
+	echo "AlphaBot2-Setup Version 0.2"
 	echo ""
 	echo "https://robotsgo.net/ https://github.com/RobotsGo"
 	echo "Credits: Spoonieau (Rick Spooner)"
@@ -235,11 +270,11 @@ until [ "$selection" = "0" ]; do
   clear
   echo ""
   echo ""
-  echo "RobotsGo AlphaBot2-Setup Version 0.1"
+  echo "RobotsGo AlphaBot2-Setup Version 0.2"
   echo ""
-  echo "    	1  -  Menu Option 1: Setup RobotsGo AlphaBot2 Software"
+  echo "    	1  -  Menu Option 1: Setup RobotsGo AlphaBot2 Robot platform"
   echo "    	2  -  Menu Option 2: Setup up PC client"
-  echo "    	3  -  Menu Option 3: Setup AlphaBot2 as WIFI AP + DHCP"
+  echo "    	3  -  Menu Option 3: Setup AlphaBot2 as 5ghz WIFI AP + DHCP (RUN Menu Option 1 FIRST!!!!!)"
   echo "    	4  -  Menu Option 4: View info"
   echo "    	0  -  Exit"
   echo ""
