@@ -24,7 +24,7 @@ read Hostname
 echo " "
 
 echo "SET WIFI country code - See https://en.wikipedia.org/wiki/ISO_3166-1"
-echo "Rember your country code as it will needed later for hostap setup"
+echo "Remeber your country code as it will needed later for hostap setup"
 read CCrpi
 
 echo " "
@@ -104,7 +104,7 @@ echo " "
 echo "Clone and build ustreamer with omx support"
 cd ~
 git clone --depth=1 https://github.com/pikvm/ustreamer
-cd ~/AlphaBot2/AlphaBot2-Control/ustreamer
+cd ~/ustreamer
 make WITH_OMX=1
 sudo make install
 
