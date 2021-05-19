@@ -93,5 +93,5 @@ Use the IR sensors
 Share data between the controller application and the streamer application (colour, speed modes)    
 ~~Get images and videos of unit in action~~       
 ~~Sort out rpi os install/script for GameHat + AB2~~
-~~Improve camera streaming performance - investagate other ways~~ VLC requires 'Network Caching' to be reduces to 200ms to remove delay   
+~~Improve camera streaming performance - investagate other ways~~ VLC requires 'Network Caching' to be reduced to 200ms to remove delay   
 Build all this in to a wiki        
