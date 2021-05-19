@@ -129,8 +129,12 @@ echo "country="$CCrpi | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
 sudo iw reg set $CCrpi
 
 echo " "
+
 echo "Unblocking wifi"
 sudo rfkill unblock wifi
+
+echo "Updating EEPROM if required"
+sudo rpi-eeprom-update -a
 
 echo "Please restart for changes to take effect."
 exit
