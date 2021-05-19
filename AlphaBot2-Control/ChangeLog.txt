@@ -1,3 +1,10 @@
+***Version 0.1***19/05/2021
+Major updates to setup script - nolonger need raspi-config, moved AP to 5ghz, added ustreamer
+Removed flask and opencv replaced with ustreamer
+Added ipega PG-9099 'WOLAVERINE' controler support
+ustreamer in use for realtime http video streaming
+code clean ups.
+
 ***Version 0.1***25/04/2021
 Testing with setup script
 Addded netifaces to mmp1251Mapping.py + networkMapping.py +
