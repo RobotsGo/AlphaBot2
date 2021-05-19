@@ -1,7 +1,7 @@
 #!/bin/bash
 
 menu_option_one() {
-  echo "Start openCV/flask Streamer"
+  echo "Start ustreamer"
   ./startStreamer.sh &
   disown
 }
@@ -35,6 +35,11 @@ menu_option_six() {
 }
 
 menu_option_seven() {
+	echo "Start PG-9099 Server"
+	sudo python3 ipegaPG9099.py
+}
+
+menu_option_eight() {
 	echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 	echo "@@@((((@@&((((((((((((((((%@@@@@@@@@@@@@"
 	echo "@@@(((//@@@/////////////////****@@@@@@@@"
@@ -60,7 +65,7 @@ menu_option_seven() {
 }
 
 launcher_exit() {
-pkill flask
+sudo pkill -f ustreamer
 exit
 }
 
@@ -81,13 +86,14 @@ until [ "$selection" = "0" ]; do
   echo ""
   echo "RobotsGo AlphaBot2-Control launcher ver 0.1"
   echo ""
-  echo "    	1  -  Menu Option 1: Start openCV/flask Streamer"
+  echo "    	1  -  Menu Option 1: Start ustreamer"
   echo "    	2  -  Menu Option 2: Start Network Client Control"
   echo "    	3  -  Menu Option 3: Start Network Server"
-  echo "    	4  -  Menu Option 4: Start PS3 gamepad Control"
-  echo "	5  -  Menu Option 5: Start XboxOne gamepad Control"
-  echo "	6  -  Menu Option 6: Start MMP1251 (Mod my pi) gamepad Contorl"
-  echo "    	7  -  Menu Option 7: View component info"
+  echo "    	4  -  Menu Option 4: Start PS3 Gamepad Control"
+  echo "	5  -  Menu Option 5: Start XboxOne Gamepad Control"
+  echo "	6  -  Menu Option 6: Start MMP1251 (Mod my pi) Gamepad Contorl"
+  echo "	7  -  Menu Option 7: Start ipega PG-9099 bluetooth Gamepad control"
+  echo "    	8  -  Menu Option 8: View component info"
   echo "    	0  -  Exit"
   echo ""
   echo -n "  Enter selection: "
