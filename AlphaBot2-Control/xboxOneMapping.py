@@ -102,18 +102,21 @@ def decreaseColours():
         print('Change colour to: ' + str(COLOURS[SELECTED_COLOUR]) + ' ' + str(SELECTED_COLOUR))
 
 def setSpeed():
-    
+    #Speed tuning motor.Speed(MOTOR1, MOTOR2)
+    #Looking from the front (USB PORTS) MOTOR1 is on your right
+    #Increase the slower wheel 0.1 till bot moves stright ish. 
     if (SPEED_MODE == 1):
-        motor.Speed(0.2, 0.2)
+        motor.Speed(0.3, 0.2) #default (0.2, 0.2)
 
     elif(SPEED_MODE == 2):
-        motor.Speed(0.5, 0.5)
+        motor.Speed(0.6, 0.5) #default (0.5, 0.5)
         
     elif(SPEED_MODE == 3):
-        motor.Speed(0.8, 0.8)
+        motor.Speed(0.9, 0.8) #default (0.5, 0.5)
     
     else:
-        motor.Speed(0.2, 0.2)
+        motor.Speed(0.3, 0.2) #default (0.2, 0.2)
+    
         
 def exitButtonPressed():
     led.clearLed()
@@ -157,7 +160,7 @@ def xboxOneMappingStart():
     
     if HOST_IP != " ":
         print("Video Stream will be available @ http://" + str(HOST_IP) + ":8000")
-        print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/video_feed")
+        print("To use VLC etc, Video Stream will be available @ http://" + str(HOST_IP) + ":8000/stream")
     
     if not Gamepad.available():
         print('Please connect your gamepad...')
