@@ -164,7 +164,7 @@ print("RobotsGo web https://robotsgo.net/")
 print("RobotsGo webhttps://github.com/RobotsGo")
 print("")
 print("Video Stream will be available @ http://" + str(host) + ":8000")
-print("To use VLC etc, Video Stream will be available @ http://" + str(host) + ":8000/video_feed")
+print("To use VLC etc, Video Stream will be available @ http://" + str(host) + ":8000/stream")
 
 while connected == True:
     receivedBuffer = client_socket.recv(1024).decode()
