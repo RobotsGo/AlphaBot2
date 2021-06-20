@@ -46,7 +46,9 @@ When script exits the Streamer should stop
 
 ### Controller support   
 PS3 Controller      
-https://pimylifeup.com/raspberry-pi-playstation-controllers/        
+https://pimylifeup.com/raspberry-pi-playstation-controllers/    
+or   
+https://wiki.gentoo.org/wiki/Sony_DualShock#DualShock_3      
 R2 = Forwards,  L2 = Backwards, RightStick = Steering Left/Right         
 LeftStick = Camera Up,Down,Left,Right,  Cross = Kicker            
 Triangle = Center Camera, D UP/Down = Set Speed modes         
