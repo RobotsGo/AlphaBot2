@@ -27,7 +27,7 @@ def kickBall():
 
 	relay.on() 
 	print("Relay " + str(relay.value))
-	time.sleep(0.1)
+	time.sleep(0.03)
 	relay.off()
 	print("Relay " + str(relay.value))
 
