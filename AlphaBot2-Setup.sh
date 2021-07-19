@@ -50,28 +50,8 @@ sudo systemctl start ssh
 echo " "
 
 echo "Installing AbphaBot2 RobotsGo required Dependencies..."
-sudo apt-get install -y make gcc
-sudo apt-get install -y python3
-sudo apt-get install -y python3-pip 
-sudo apt-get install -y python3-gpiozero
-sudo apt-get install -y xrdp
-sudo apt-get install -y xboxdrv
-sudo apt-get install -y libusb-dev
-#sudo apt-get install -y libatlas-base-dev //expermintal work 
-sudo apt-get install -y libevent-dev
-sudo apt-get install -y libjpeg8-dev
-sudo apt-get install -y libbsd-dev
-sudo apt-get install -y libraspberrypi-dev
-sudo apt-get install -y libgpiod
-#sudo pip3 install opencv-python //expermintal work
-#sudo pip3 install flask //expermintal work
-sudo pip3 install rpi_ws281x
-sudo pip3 install adafruit-circuitpython-servokit
-sudo pip3 install psutil
-#sudo pip3 install imutils //expermintal work
-#sudo pip3 install numpy //expermintal work
-sudo pip3 install pynput
-sudo pip3 install netifaces
+sudo apt-get install -y make gcc python3 python3-pip python3-gpiozero xrdp xboxdrv libusb-dev libevent-dev libjpeg8-dev libbsd-dev libraspberrypi-dev libgpiod-dev
+sudo pip3 install rpi_ws281x adafruit-circuitpython-servokit psutil pynput netifaces
 
 echo " "
  
@@ -100,7 +80,7 @@ chmod +x ~/AlphaBot2/AlphaBot2-Control/startStreamer.sh
 chmod +x ~/AlphaBot2/AlphaBot2-Control/startGameHatClient.sh
 
 echo " "
-
+sudo reboot
 echo "Clone and build ustreamer with omx support"
 cd ~
 git clone --depth=1 https://github.com/pikvm/ustreamer
@@ -112,9 +92,10 @@ echo " "
 
 echo "Adding needed entries to config.txt"
 echo "gpu_mem_256" | sudo tee -a /boot/config.txt
-echo "device_tree_param=spi=on" | sudo tee -a /boot/config.txt
+echo "dtparam=spi=on" | sudo tee -a /boot/config.txt
 echo "dtparam=i2c_arm=on" | sudo tee -a /boot/config.txt
 echo "start_x=1" | sudo tee -a /boot/config.txt
+sudo sed -i 's/dtparam=audio=on/#dtparam=audio=on/g' /boot/config.txt
 
 echo " "
 
@@ -274,7 +255,7 @@ until [ "$selection" = "0" ]; do
   clear
   echo ""
   echo ""
-  echo "RobotsGo AlphaBot2-Setup Version 0.2"
+  echo "RobotsGo AlphaBot2-Setup Version 0.3"
   echo ""
   echo "    	1  -  Menu Option 1: Setup RobotsGo AlphaBot2 Robot platform"
   echo "    	2  -  Menu Option 2: Setup up PC client"
