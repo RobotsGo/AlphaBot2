@@ -80,7 +80,7 @@ chmod +x ~/AlphaBot2/AlphaBot2-Control/startStreamer.sh
 chmod +x ~/AlphaBot2/AlphaBot2-Control/startGameHatClient.sh
 
 echo " "
-sudo reboot
+
 echo "Clone and build ustreamer with omx support"
 cd ~
 git clone --depth=1 https://github.com/pikvm/ustreamer
